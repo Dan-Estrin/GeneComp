@@ -2,3 +2,8 @@ exciting stuff happening here. if this ever goes public ill be genuinely surpris
 this is made to document the ongoing struggle of leanring c++ dynamic memory by 
 recreating code made in python for my brother. three cheers if i ever figure this
 out lads
+
+EDIT 10/15/2024:
+Created empty header files to allow Main.c++ to compile;
+Created dynamic libaries to be used in compilation;
+Refactored code to accomiate the above changes;
