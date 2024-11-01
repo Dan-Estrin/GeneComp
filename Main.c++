@@ -1,21 +1,41 @@
 #include <iostream>
+#include <chrono>
 #include "Calcs.h++"
 #include "FileHandler.h++"
 
 int main(){
-    int pend = BufferSize("parent.txt");
-    int oend = BufferSize("offspring.txt");
+    char parentPath[255];
+    char offspringPath[255];
+
+    std::cout << "Enter the parent filepath" << std::endl;
+    std::cin >> parentPath;
+    std::cout << "Enter the offspring filepath" << std::endl;
+    std::cin >> offspringPath;
+
+    unsigned int pend = BufferSize(parentPath);
+    unsigned int oend = BufferSize(offspringPath);
+
+    if(!(pend && oend)){
+        std::cout << "shit ain work dog";
+        return 0;
+    }
     
-    char* parent1 = new char[pend];
-    const char* parentAddress = parent1;
-    char* offspring = new char[oend];
-    const char* offspringAddress = offspring;
+    char* const parent = new char[pend];
+    char* const offspring = new char[oend];
 
-    read_file("parent.txt", parent1, pend);
-    read_file("offspring.txt", offspring, oend);
+    ReadFile(parentPath, parent, pend);
+    ReadFile(offspringPath, offspring, oend);
+    
+    GenomeComparison* compared = new GenomeComparison((pend > oend) ? pend:oend);
 
-    GenomeComparison compared = GenomeComparison((pend > oend) ? pend:oend);
-    compared.CompareGenome(offspringAddress, parentAddress);
+    compared->CompareGenome(offspring, parent);
+
+    std::cout << *compared->GetData('d') << std::endl;
+
+    delete[] offspring;
+    delete[] parent;
+    
+    delete compared;
 
     return 0;
 }
